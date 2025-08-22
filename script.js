@@ -47,6 +47,16 @@ const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const playersList = document.getElementById('playersList');
 
+// Team name input elements
+const team1NameInput = document.getElementById('team1NameInput');
+const team2NameInput = document.getElementById('team2NameInput');
+const updateNamesBtn = document.getElementById('updateNamesBtn');
+
+// Print to Google Docs elements
+const printToDocsBtn = document.getElementById('printToDocsBtn');
+const docsExport = document.getElementById('docsExport');
+const docsInstructions = document.getElementById('docsInstructions');
+
 // === Team Tab Handling ===
 team1Tab.addEventListener('click', () => {
     activeTeam = 0;
@@ -59,6 +69,15 @@ team2Tab.addEventListener('click', () => {
     team2Tab.classList.add('active');
     team1Tab.classList.remove('active');
     renderPlayers();
+});
+
+// === Team Name Editing ===
+updateNamesBtn.addEventListener('click', () => {
+    teams[0].name = team1NameInput.value || "Team 1";
+    teams[1].name = team2NameInput.value || "Team 2";
+    team1Tab.textContent = teams[0].name;
+    team2Tab.textContent = teams[1].name;
+    renderScoreboard();
 });
 
 // === Scoreboard Rendering ===
@@ -171,6 +190,31 @@ function renderPlayers() {
         };
     });
 }
+
+// === Print to Google Docs ===
+printToDocsBtn.addEventListener('click', () => {
+    let summary = `Basketball Game Result\n\n`;
+    summary += `${teams[0].name} vs ${teams[1].name}\n`;
+    summary += `Final Score: ${teams[0].name} ${scores[0]} - ${scores[1]} ${teams[1].name}\n`;
+    summary += `Quarter: ${quarter}\n\n`;
+
+    summary += `Team Stats:\n`;
+
+    teams.forEach((team, tIdx) => {
+        summary += `\n${team.name}:\n`;
+        team.players.forEach((player, pIdx) => {
+            const stats = playerStats[tIdx][pIdx];
+            summary += `- ${player.name}: `;
+            summary += `PTS: ${stats.pts}, REB: ${stats.reb}, AST: ${stats.ast}, ST: ${stats.stl}, BLK: ${stats.blk}, TOV: ${stats.tov}\n`;
+        });
+    });
+
+    docsExport.value = summary;
+    docsExport.style.display = 'block';
+    docsInstructions.style.display = 'block';
+    docsExport.focus();
+    docsExport.select();
+});
 
 // === Initial Render ===
 renderScoreboard();
