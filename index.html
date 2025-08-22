@@ -12,6 +12,15 @@
         <h1>BASKETBALL TOURNAMENT SCOREBOARD</h1>
     </header>
     <main>
+        <div class="team-names-edit">
+            <label>
+                Team 1 Name: <input type="text" id="team1NameInput" value="Team 1">
+            </label>
+            <label>
+                Team 2 Name: <input type="text" id="team2NameInput" value="Team 2">
+            </label>
+            <button id="updateNamesBtn">Update Names</button>
+        </div>
         <div class="tabs">
             <button id="team1Tab" class="active">Team 1</button>
             <button id="team2Tab">Team 2</button>
@@ -35,6 +44,12 @@
         <section id="playersList">
             <!-- Players will be rendered here -->
         </section>
+        <button id="printToDocsBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print to Google Docs</button>
+        <textarea id="docsExport" style="width:95vw;max-width:600px;height:150px;display:none;margin:1rem auto 2rem auto;"></textarea>
+        <div id="docsInstructions" style="display:none;text-align:center;color:#1877f2;">
+            <p>1. Press Ctrl+C to copy the summary above.</p>
+            <p>2. Open <a href="https://docs.google.com/document/u/0/" target="_blank">Google Docs</a> and paste into your document.</p>
+        </div>
     </main>
     <script src="script.js"></script>
 </body>
