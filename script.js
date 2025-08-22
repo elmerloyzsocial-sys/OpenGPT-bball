@@ -40,22 +40,22 @@ const team1Score = document.getElementById('team1Score');
 const team2Score = document.getElementById('team2Score');
 const team1Name = document.getElementById('team1Name');
 const team2Name = document.getElementById('team2Name');
-const quarterElem = document.getElementById('quarter');
+const quarterInput = document.getElementById('quarterInput');
+const updateQuarterBtn = document.getElementById('updateQuarterBtn');
 const timerElem = document.getElementById('timer');
 const startBtn = document.getElementById('startBtn');
 const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const playersList = document.getElementById('playersList');
-
-// Team name input elements
 const team1NameInput = document.getElementById('team1NameInput');
 const team2NameInput = document.getElementById('team2NameInput');
 const updateNamesBtn = document.getElementById('updateNamesBtn');
-
-// Print to Google Docs elements
 const printToDocsBtn = document.getElementById('printToDocsBtn');
 const docsExport = document.getElementById('docsExport');
 const docsInstructions = document.getElementById('docsInstructions');
+const saveQuarterBtn = document.getElementById('saveQuarterBtn');
+const quarterExport = document.getElementById('quarterExport');
+const quarterInstructions = document.getElementById('quarterInstructions');
 
 // === Team Tab Handling ===
 team1Tab.addEventListener('click', () => {
@@ -80,13 +80,22 @@ updateNamesBtn.addEventListener('click', () => {
     renderScoreboard();
 });
 
+// === Editable quarter logic ===
+updateQuarterBtn.addEventListener('click', () => {
+    const q = parseInt(quarterInput.value, 10);
+    if (q >= 1 && q <= 4) {
+        quarter = q;
+        renderScoreboard();
+    }
+});
+
 // === Scoreboard Rendering ===
 function renderScoreboard() {
     team1Score.textContent = scores[0];
     team2Score.textContent = scores[1];
     team1Name.textContent = teams[0].name;
     team2Name.textContent = teams[1].name;
-    quarterElem.textContent = quarter;
+    quarterInput.value = quarter;
     timerElem.textContent = formatTime(timerSeconds);
 }
 function formatTime(sec) {
@@ -119,7 +128,7 @@ resetBtn.addEventListener('click', () => {
     timerSeconds = 600;
     timerElem.textContent = formatTime(timerSeconds);
     quarter = 1;
-    quarterElem.textContent = quarter;
+    quarterInput.value = quarter;
     scores = [0, 0];
     renderScoreboard();
     playerStats = [
@@ -127,12 +136,6 @@ resetBtn.addEventListener('click', () => {
         teams[1].players.map(_ => ({ pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, tov: 0 }))
     ];
     renderPlayers();
-});
-
-// === Period/Quarter Advancement ===
-quarterElem.addEventListener('click', () => {
-    quarter = quarter < 4 ? quarter + 1 : 1;
-    quarterElem.textContent = quarter;
 });
 
 // === Player Cards Rendering ===
@@ -214,6 +217,26 @@ printToDocsBtn.addEventListener('click', () => {
     docsInstructions.style.display = 'block';
     docsExport.focus();
     docsExport.select();
+});
+
+// === Save quarter to Google Drive (copy-paste summary) ===
+saveQuarterBtn.addEventListener('click', () => {
+    let summary = `Quarter ${quarter} Summary\n`;
+    summary += `${teams[0].name}: ${scores[0]}\n`;
+    teams[0].players.forEach((p, i) => {
+        let stats = playerStats[0][i];
+        summary += `- ${p.name}: PTS ${stats.pts}, REB ${stats.reb}, AST ${stats.ast}, STL ${stats.stl}, BLK ${stats.blk}, TOV ${stats.tov}\n`;
+    });
+    summary += `${teams[1].name}: ${scores[1]}\n`;
+    teams[1].players.forEach((p, i) => {
+        let stats = playerStats[1][i];
+        summary += `- ${p.name}: PTS ${stats.pts}, REB ${stats.reb}, AST ${stats.ast}, STL ${stats.stl}, BLK ${stats.blk}, TOV ${stats.tov}\n`;
+    });
+    quarterExport.value = summary;
+    quarterExport.style.display = 'block';
+    quarterInstructions.style.display = 'block';
+    quarterExport.focus();
+    quarterExport.select();
 });
 
 // === Initial Render ===
