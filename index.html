@@ -34,11 +34,20 @@
                 <span id="team2Name">Team 2</span>
             </div>
             <div class="game-info">
-                <span>Quarter: <span id="quarter">1</span></span>
+                <span>
+                    Quarter: 
+                    <input type="number" id="quarterInput" min="1" max="4" value="1" style="width:2.5em;">
+                    <button id="updateQuarterBtn">Set</button>
+                </span>
                 <span>Time: <span id="timer">10:00</span></span>
                 <button id="startBtn">Start</button>
                 <button id="pauseBtn">Pause</button>
                 <button id="resetBtn">Reset</button>
+                <button id="saveQuarterBtn" style="background:#34a853;color:#fff;">Save Quarter to Drive</button>
+            </div>
+            <textarea id="quarterExport" style="width:95vw;max-width:600px;height:100px;display:none;margin:1rem auto;"></textarea>
+            <div id="quarterInstructions" style="display:none;text-align:center;color:#34a853;">
+                <p>Copy the summary and paste it into <a href="https://drive.google.com" target="_blank">Google Drive</a> (e.g. Docs or Sheets).</p>
             </div>
         </section>
         <section id="playersList">
