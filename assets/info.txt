@@ -1,0 +1,9 @@
+── team1/
+│   │   ├── player1.jpg
+│   │   ├── player2.jpg
+│   │   └── ...
+│   ├── team2/
+│   │   ├── player1.jpg
+│   │   ├── player2.jpg
+│   │   └── ...
+│   └── logo.png
