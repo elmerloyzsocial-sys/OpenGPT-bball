@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basketball Scoreboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Event Logo" class="event-logo">
+        <h1>BASKETBALL TOURNAMENT SCOREBOARD</h1>
+    </header>
+    <main>
+        <div class="tabs">
+            <button id="team1Tab" class="active">Team 1</button>
+            <button id="team2Tab">Team 2</button>
+        </div>
+        <section id="scoreboard">
+            <div class="scores">
+                <span id="team1Name">Team 1</span>
+                <span id="team1Score" class="score">0</span>
+                <span>:</span>
+                <span id="team2Score" class="score">0</span>
+                <span id="team2Name">Team 2</span>
+            </div>
+            <div class="game-info">
+                <span>Quarter: <span id="quarter">1</span></span>
+                <span>Time: <span id="timer">10:00</span></span>
+                <button id="startBtn">Start</button>
+                <button id="pauseBtn">Pause</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+        </section>
+        <section id="playersList">
+            <!-- Players will be rendered here -->
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
