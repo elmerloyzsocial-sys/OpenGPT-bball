@@ -138,6 +138,19 @@ resetBtn.addEventListener('click', () => {
     renderPlayers();
 });
 
+// Timer set functionality
+document.getElementById('updateTimeBtn').addEventListener('click', function() {
+    const inputValue = document.getElementById('timerInput').value;
+    const timerSpan = document.getElementById('timer');
+
+    // Simple validation to match MM:SS (optional, since input uses pattern)
+    if (/^[0-9]{1,2}:[0-9]{2}$/.test(inputValue)) {
+        timerSpan.textContent = inputValue;
+    } else {
+        alert('Please enter time in MM:SS format.');
+    }
+});
+
 // === Player Cards Rendering ===
 function renderPlayers() {
     playersList.innerHTML = '';
