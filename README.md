@@ -1,21 +1,104 @@
 # Digital Basketball Scoreboard
 
-A simple web-based basketball scoreboard you can manage for competitions. **Mobile friendly. Hosted on GitHub Pages.**
+A simple, mobile-friendly basketball scoreboard website for live tracking games, hosted via GitHub Pages.  
+**Easily manage teams, players, scores, stats, and export results!**
 
 ---
 
-## Features
+## 🚀 How to Use
 
-- Tabs for each competing team
-- Live scoreboard: scores, timer, and quarter/period
-- Display player photos/logos
-- Clickable buttons for player stats: Points (+1/+2/+3), Rebound, Assist, Steal, Block, Turnover
-- Instantly updates scores and stats
-- Mobile-friendly layout
+### 1. **Setup and Access**
+
+- **Clone or download the repository** to your computer or GitHub account.
+- Open `index.html` in your browser to use locally, or [deploy to GitHub Pages](#deploy-to-github-pages) to make it available online.
 
 ---
 
-## Tree Structure
+### 2. **Managing Teams & Players (Admin Guide)**
+
+#### **Change Team Names**
+
+- At the top of the page, find the "Team 1 Name" and "Team 2 Name" input fields.
+- Type new team names and click **"Update Names"**.
+- The scoreboard and tabs are updated instantly!
+
+#### **Edit Players**
+
+- Open `script.js` in any text editor.
+- Locate the following section near the top:
+    ```js
+    const teams = [
+        {
+            name: "Team 1",
+            players: [
+                { name: "Player A", photo: "assets/team1/player1.jpg" },
+                { name: "Player B", photo: "assets/team1/player2.jpg" },
+                { name: "Player C", photo: "assets/team1/player3.jpg" }
+            ]
+        },
+        {
+            name: "Team 2",
+            players: [
+                { name: "Player D", photo: "assets/team2/player1.jpg" },
+                { name: "Player E", photo: "assets/team2/player2.jpg" },
+                { name: "Player F", photo: "assets/team2/player3.jpg" }
+            ]
+        }
+    ];
+    ```
+- **To add/remove players:**
+    - Add or remove `{ name: "...", photo: "..." }` objects within each team's `players` array.
+    - Make sure `photo` points to the correct file in the `assets/team1/` or `assets/team2/` folder.
+
+#### **Change Player Photos**
+
+- Replace images in `assets/team1/` and `assets/team2/` with your own `.jpg` or `.png` files.
+- Update the `photo` path in `script.js` to match your new filenames.
+
+---
+
+### 3. **Change Logo**
+
+- Replace `assets/logo.png` with your event or league logo (PNG or JPG recommended).
+- The logo will appear at the top of the webpage automatically.
+
+---
+
+### 4. **Change Background & Styles**
+
+- Open `style.css` in a text editor.
+- Adjust colors (backgrounds, buttons, etc):
+    - Change `body { background: #f3f6fa; ... }` for the overall background color.
+    - Update header color in `header { background: #1877f2; ... }`.
+    - Edit button, card, and font colors as desired.
+- Save changes and refresh the page to see updates.
+
+---
+
+### 5. **Live Game Usage**
+
+- **Switch Teams:** Use the tabs to view each team's players.
+- **Timer:** Start, pause, and reset the game timer.
+- **Quarter:** Enter a quarter number and click "Set" to change the quarter.
+- **Player Stats:** Click stat buttons (+1, +2, +3, etc.) to update each player's performance. Points automatically update the team score.
+- **Export Results:** After the game or each quarter:
+    - Click **"Print to Google Docs"** for the final game summary.
+    - Click **"Save Quarter to Drive"** to get a summary for the current quarter.
+    - Copy the generated summary and paste it into Google Docs or Google Sheets.
+
+---
+
+### 6. **Deploy to GitHub Pages**
+
+1. **Push your repository to GitHub.**
+2. Go to your repo’s Settings → Pages.
+3. Select the branch (e.g., `main`) and `/ (root)` for the folder.
+4. Your scoreboard will be available at:  
+   `https://<yourusername>.github.io/<reponame>/`
+
+---
+
+## 📁 Directory Structure
 
 ```
 basketball-scoreboard/
@@ -23,11 +106,9 @@ basketball-scoreboard/
 │   ├── team1/
 │   │   ├── player1.jpg
 │   │   ├── player2.jpg
-│   │   └── ...
 │   ├── team2/
 │   │   ├── player1.jpg
 │   │   ├── player2.jpg
-│   │   └── ...
 │   └── logo.png
 ├── index.html
 ├── style.css
@@ -37,67 +118,25 @@ basketball-scoreboard/
 
 ---
 
-## How To Use
+## 🛠️ Customization Tips
 
-### 1. **Clone or Upload Your Repository**
-- Fork or download the code to your GitHub account.
-
-### 2. **Add Your Team and Player Images**
-- Place team logos and player photos in `assets/team1/` and `assets/team2/`.
-- Update player names and photo paths in `script.js` (see the `teams` variable).
-
-### 3. **Edit Team and Player Info**
-- In `script.js`, change `teams` array to match your team and player names, and image paths.
-    ```js
-    const teams = [
-        {
-            name: "Team 1",
-            players: [
-                { name: "Player A", photo: "assets/team1/player1.jpg" },
-                ...
-            ]
-        },
-        ...
-    ];
-    ```
-
-### 4. **Customize Event Logo**
-- Replace `assets/logo.png` with your event or league logo.
-
-### 5. **Open the Webpage**
-- Open `index.html` in your browser to use locally.
-- To host on GitHub Pages:
-    - Push your repository to GitHub.
-    - Go to repo settings → Pages → Choose branch (`main` or `master`) and `/root`.
-    - Your scoreboard will be live at `https://<yourusername>.github.io/<reponame>/`.
-
-### 6. **Using the Scoreboard**
-- Select teams by clicking the tabs.
-- Update scores and stats by clicking the + buttons.
-- Start, pause, or reset the game timer.
-- Click the "Quarter" to advance to the next period (resets after 4).
+- **Add more teams:** Expand the `teams` array in `script.js`.
+- **Change stat categories:** Modify player card HTML and stats code in `script.js`.
+- **Mobile tweaks:** Adjust CSS in `style.css` for your preferred look.
 
 ---
 
-## FAQ
+## ❓ FAQ
 
-- **Can I add more teams or players?**  
-  Yes! Edit the `teams` array in `script.js` and add more images.
-
-- **Is my data saved?**  
-  No, it's a simple scoreboard for live tracking; stats reset if the page reloads.
-
-- **Is it mobile friendly?**  
-  Yes, layout adjusts for phones and tablets.
+- **Do changes persist after refresh?**  
+  No, the scoreboard is for live tracking. Data resets on reload. For saving, use the export features.
+- **Can I add more stats or features?**  
+  Yes! Edit `script.js` for advanced functionality (e.g., fouls, minutes, etc).
+- **Can I automate Google Drive uploads?**  
+  This site uses copy-paste for security and simplicity. For full integration, see Google Drive API documentation.
 
 ---
 
-## Customization
-
-- For advanced features (data saving, more stats, schedule), consider expanding the JavaScript code.
-
----
-
-## License
+## 📄 License
 
 MIT (Free to use and modify)
