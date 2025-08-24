@@ -64,16 +64,16 @@
                 <script>
                     // Player data
                     const players = [
-                        { name: "Loyz V", img: "assets/players/player1.png" },
-                        { name: "Jerwin P", img: "assets/players/player2.png" },
-                        { name: "Lloyd C", img: "assets/players/player3.png" },
-                        { name: "Elvis C", img: "assets/players/player4.png" },
-                        { name: "Jay J", img: "assets/players/player5.png" },
-                        { name: "Jordan C", img: "assets/players/player6.png" },
-                        { name: "Rey R", img: "assets/players/player7.png" },
-                        { name: "Dee S", img: "assets/players/player8.png" },
-                        { name: "Dan", img: "assets/players/player9.png" },
-                        { name: "Bryan S", img: "assets/players/player10.png" },
+                        { name: "Player 1", img: "assets/players/player1.png" },
+                        { name: "Player 2", img: "assets/players/player2.png" },
+                        { name: "Player 3", img: "assets/players/player3.png" },
+                        { name: "Player 4", img: "assets/players/player4.png" },
+                        { name: "Player 5", img: "assets/players/player5.png" },
+                        { name: "Player 6", img: "assets/players/player6.png" },
+                        { name: "Player 7", img: "assets/players/player7.png" },
+                        { name: "Player 8", img: "assets/players/player8.png" },
+                        { name: "Player 9", img: "assets/players/player9.png" },
+                        { name: "Player 10", img: "assets/players/player10.png" },
                         { name: "Player 11", img: "assets/players/player11.png" },
                         { name: "Player 12", img: "assets/players/player12.png" },
                         { name: "Player 13", img: "assets/players/player13.png" },
@@ -135,6 +135,21 @@
                     cursor: pointer;
                     margin-left: 0.3em;
                 }
+                /* New for player name editing */
+                .edit-player-btn {
+                    background: none;
+                    border: none;
+                    color: #1877f2;
+                    cursor: pointer;
+                    margin-left: 0.3em;
+                    font-size: 1.1em;
+                    vertical-align: middle;
+                }
+                .player-name-input {
+                    width: 90px;
+                    font-size: 1em;
+                    text-align: center;
+                }
             </style>
             <script>
                 // Render the players stats cards
@@ -144,7 +159,15 @@
                         html += `
                         <div class="player-card" id="playerCard${idx}">
                             <img src="${p.img}" alt="${p.name} Logo" class="player-logo" onerror="this.src='assets/players/default.png'">
-                            <div><strong>${p.name}</strong></div>
+                            <div>
+                                <strong id="playerNameDisplay${idx}">${p.name}</strong>
+                                <button class="edit-player-btn" title="Edit Player Name" onclick="editPlayerName(${idx})">&#9998;</button>
+                            </div>
+                            <div id="playerNameEdit${idx}" style="display:none;">
+                                <input type="text" class="player-name-input" id="playerNameInput${idx}" value="${p.name}" maxlength="24">
+                                <button class="stat-btn" onclick="savePlayerName(${idx})">Save</button>
+                                <button class="stat-btn" style="background:#999;" onclick="cancelPlayerNameEdit(${idx})">Cancel</button>
+                            </div>
                             <div class="stat-row">
                                 <span class="stat-label">Points</span>
                                 <span class="stat-value" id="points${idx}">0</span>
@@ -186,12 +209,50 @@
                     }
                 }
 
-                // Initial render
-                window.addEventListener('DOMContentLoaded', renderPlayersStats);
+                // Editable player name functions
+                function editPlayerName(idx) {
+                    document.getElementById(`playerNameDisplay${idx}`).style.display = 'none';
+                    document.querySelector(`#playerCard${idx} .edit-player-btn`).style.display = 'none';
+                    document.getElementById(`playerNameEdit${idx}`).style.display = 'block';
+                    document.getElementById(`playerNameInput${idx}`).focus();
+                }
+                function savePlayerName(idx) {
+                    const newName = document.getElementById(`playerNameInput${idx}`).value.trim() || "Player " + (idx+1);
+                    players[idx].name = newName;
+                    document.getElementById(`playerNameDisplay${idx}`).innerText = newName;
+                    document.getElementById(`playerNameDisplay${idx}`).style.display = 'inline';
+                    document.querySelector(`#playerCard${idx} .edit-player-btn`).style.display = 'inline-block';
+                    document.getElementById(`playerNameEdit${idx}`).style.display = 'none';
+                }
+                function cancelPlayerNameEdit(idx) {
+                    document.getElementById(`playerNameInput${idx}`).value = players[idx].name;
+                    document.getElementById(`playerNameDisplay${idx}`).style.display = 'inline';
+                    document.querySelector(`#playerCard${idx} .edit-player-btn`).style.display = 'inline-block';
+                    document.getElementById(`playerNameEdit${idx}`).style.display = 'none';
+                }
+
+                // Support Enter key for quick editing
+                document.addEventListener('DOMContentLoaded', function() {
+                    renderPlayersStats();
+                    // Attach keydown for input fields after initial render
+                    players.forEach((_, idx) => {
+                        document.addEventListener('keydown', function(e) {
+                            const input = document.getElementById(`playerNameInput${idx}`);
+                            if (input && input === document.activeElement) {
+                                if (e.key === 'Enter') {
+                                    savePlayerName(idx);
+                                }
+                                if (e.key === 'Escape') {
+                                    cancelPlayerNameEdit(idx);
+                                }
+                            }
+                        });
+                    });
+                });
             </script>
         </section>
         <!-- Print to Google Drive button and export area -->
-        <button id="printToDriveBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print All Data to Google Drive</button>
+        <button id="printToDriveBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print All[...]</button>
         <textarea id="driveExport" style="width:95vw;max-width:600px;height:220px;display:none;margin:1rem auto 2rem auto;"></textarea>
         <div id="driveInstructions" style="display:none;text-align:center;color:#1877f2;">
             <p>1. Press Ctrl+C to copy the summary above.</p>
