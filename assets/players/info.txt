@@ -1,0 +1,3 @@
+Put player images in assets/players/ as player1.png, player2.png, ..., player15.png. Add default.png for missing images.
+The player stats section is interactive: click + or – to increment/decrement points, rebounds, assists per player.
+Stats update instantly, no page reload required. You can further enhance by saving stats or connecting to backend if needed.
