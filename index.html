@@ -57,9 +57,140 @@
             </div>
         </section>
         <section id="playersList">
-            <!-- Players will be rendered here -->
+            <h2 style="margin-top:2rem;">Registered Players Stats</h2>
+            <div class="players-grid">
+                <!-- 15 players, placeholder image and names -->
+                <!-- You can update player names and images as needed -->
+                <script>
+                    // Player data
+                    const players = [
+                        { name: "Player 1", img: "assets/players/player1.png" },
+                        { name: "Player 2", img: "assets/players/player2.png" },
+                        { name: "Player 3", img: "assets/players/player3.png" },
+                        { name: "Player 4", img: "assets/players/player4.png" },
+                        { name: "Player 5", img: "assets/players/player5.png" },
+                        { name: "Player 6", img: "assets/players/player6.png" },
+                        { name: "Player 7", img: "assets/players/player7.png" },
+                        { name: "Player 8", img: "assets/players/player8.png" },
+                        { name: "Player 9", img: "assets/players/player9.png" },
+                        { name: "Player 10", img: "assets/players/player10.png" },
+                        { name: "Player 11", img: "assets/players/player11.png" },
+                        { name: "Player 12", img: "assets/players/player12.png" },
+                        { name: "Player 13", img: "assets/players/player13.png" },
+                        { name: "Player 14", img: "assets/players/player14.png" },
+                        { name: "Player 15", img: "assets/players/player15.png" },
+                    ];
+                </script>
+                <div id="playersStats"></div>
+            </div>
+            <style>
+                .players-grid {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 1.5rem;
+                    justify-content: center;
+                    margin-top: 1rem;
+                }
+                .player-card {
+                    background: #f9f9f9;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+                    width: 180px;
+                    padding: 1rem;
+                    text-align: center;
+                    position: relative;
+                    transition: box-shadow 0.2s;
+                }
+                .player-card:hover {
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+                }
+                .player-logo {
+                    width: 60px;
+                    height: 60px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    margin-bottom: 0.5em;
+                }
+                .stat-row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin: 0.4em 0;
+                }
+                .stat-label {
+                    font-size: 0.98em;
+                }
+                .stat-value {
+                    font-weight: bold;
+                    font-size: 1.15em;
+                    padding: 0 0.5em;
+                }
+                .stat-btn {
+                    background: #1877f2;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                    padding: 0.15em 0.5em;
+                    font-size: 1em;
+                    cursor: pointer;
+                    margin-left: 0.3em;
+                }
+            </style>
+            <script>
+                // Render the players stats cards
+                function renderPlayersStats() {
+                    let html = '';
+                    players.forEach((p, idx) => {
+                        html += `
+                        <div class="player-card" id="playerCard${idx}">
+                            <img src="${p.img}" alt="${p.name} Logo" class="player-logo" onerror="this.src='assets/players/default.png'">
+                            <div><strong>${p.name}</strong></div>
+                            <div class="stat-row">
+                                <span class="stat-label">Points</span>
+                                <span class="stat-value" id="points${idx}">0</span>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'points', 1)">+</button>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'points', -1)">-</button>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Rebounds</span>
+                                <span class="stat-value" id="rebounds${idx}">0</span>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'rebounds', 1)">+</button>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'rebounds', -1)">-</button>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Assists</span>
+                                <span class="stat-value" id="assists${idx}">0</span>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'assists', 1)">+</button>
+                                <button class="stat-btn" onclick="updateStat(${idx}, 'assists', -1)">-</button>
+                            </div>
+                        </div>
+                        `;
+                    });
+                    document.getElementById('playersStats').innerHTML = html;
+                }
+
+                // Stats state
+                const playerStats = Array(15).fill(0).map(() => ({
+                    points: 0,
+                    rebounds: 0,
+                    assists: 0
+                }));
+
+                // Stat update function
+                function updateStat(idx, stat, delta) {
+                    if (
+                        (playerStats[idx][stat] + delta) >= 0
+                    ) {
+                        playerStats[idx][stat] += delta;
+                        document.getElementById(`${stat}${idx}`).innerText = playerStats[idx][stat];
+                    }
+                }
+
+                // Initial render
+                window.addEventListener('DOMContentLoaded', renderPlayersStats);
+            </script>
         </section>
-        <button id="printToDocsBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print to Google Docs</button>
+        <button id="printToDocsBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print to G[...]
         <textarea id="docsExport" style="width:95vw;max-width:600px;height:150px;display:none;margin:1rem auto 2rem auto;"></textarea>
         <div id="docsInstructions" style="display:none;text-align:center;color:#1877f2;">
             <p>1. Press Ctrl+C to copy the summary above.</p>
