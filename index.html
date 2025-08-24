@@ -190,13 +190,46 @@
                 window.addEventListener('DOMContentLoaded', renderPlayersStats);
             </script>
         </section>
-        <button id="printToDocsBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print to G[...]
-        <textarea id="docsExport" style="width:95vw;max-width:600px;height:150px;display:none;margin:1rem auto 2rem auto;"></textarea>
-        <div id="docsInstructions" style="display:none;text-align:center;color:#1877f2;">
+        <!-- Print to Google Drive button and export area -->
+        <button id="printToDriveBtn" style="margin:2rem auto;display:block;background:#1877f2;color:#fff;padding:0.7rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:1.1rem;">Print All Data to Google Drive</button>
+        <textarea id="driveExport" style="width:95vw;max-width:600px;height:220px;display:none;margin:1rem auto 2rem auto;"></textarea>
+        <div id="driveInstructions" style="display:none;text-align:center;color:#1877f2;">
             <p>1. Press Ctrl+C to copy the summary above.</p>
-            <p>2. Open <a href="https://docs.google.com/document/u/0/" target="_blank">Google Docs</a> and paste into your document.</p>
+            <p>2. Open <a href="https://drive.google.com/" target="_blank">Google Drive</a> (Docs or Sheets) and paste into your document.</p>
         </div>
     </main>
     <script src="script.js"></script>
+    <script>
+        // Print to Google Drive function
+        document.getElementById('printToDriveBtn').addEventListener('click', function () {
+            // Gather main data
+            const team1Name = document.getElementById('team1Name').innerText;
+            const team2Name = document.getElementById('team2Name').innerText;
+            const team1Score = document.getElementById('team1Score').innerText;
+            const team2Score = document.getElementById('team2Score').innerText;
+            const quarter = document.getElementById('quarterInput').value;
+            const timer = document.getElementById('timer').innerText;
+
+            // Gather player stats
+            let playerSummary = 'Player Stats:\n';
+            if (typeof players !== 'undefined' && typeof playerStats !== 'undefined') {
+                players.forEach((p, idx) => {
+                    playerSummary += `${p.name} | Points: ${playerStats[idx].points}, Rebounds: ${playerStats[idx].rebounds}, Assists: ${playerStats[idx].assists}\n`;
+                });
+            }
+
+            // Compose export string
+            let exportString = `BASKETBALL TOURNAMENT SCOREBOARD\n\nTeam 1: ${team1Name} | Score: ${team1Score}\nTeam 2: ${team2Name} | Score: ${team2Score}\nQuarter: ${quarter}\nTime: ${timer}\n\n${playerSummary}`;
+
+            // Show in textarea and instructions
+            const exportArea = document.getElementById('driveExport');
+            exportArea.value = exportString;
+            exportArea.style.display = 'block';
+
+            document.getElementById('driveInstructions').style.display = 'block';
+            exportArea.focus();
+            exportArea.select();
+        });
+    </script>
 </body>
 </html>
